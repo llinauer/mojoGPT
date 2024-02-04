@@ -5,3 +5,31 @@ Definition of the GPT-style transformer model
 
 """
 
+from tensor import Tensor, TensorSpec, TensorShape
+
+# create an alias for float tensors
+alias TensorF32 = Tensor[DType.float32]
+
+
+struct LayerNorm:
+    let d_model: Int
+    var gamma: TensorF32
+    var beta: TensorF32
+
+    fn __init__(inout self, d_model: Int):
+        """ Initialize LayerNorm layer.
+        Args:
+        d_model: Int
+            Size of the residual stream
+        """
+        self.d_model = d_model
+        self.gamma = TensorF32(d_model)
+        self.beta = TensorF32(d_model)
+
+    fn forward(x: TensorF32) -> TensorF32:
+        """ Forward pass of the LayerNorm layer.
+        Args:
+        x: TensorF32
+            Input tensor
+        """
+
